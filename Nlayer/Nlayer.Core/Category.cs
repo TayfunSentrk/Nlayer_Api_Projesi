@@ -10,5 +10,7 @@ namespace Nlayer.Core
     {
         //Category entity'si oluşturuldu.Base entity'den miras aldı
         public string Name { get; set; }
+        // Category ile product arasında bire çok ilişki olduğu için Products Navigation Property oluşturuldu
+        public ICollection<Product> Products { get; set; }
     }
 }
