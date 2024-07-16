@@ -8,6 +8,7 @@ namespace Nlayer.Core
 {
     public abstract  class BaseEntity // abstract kullanmamın sebebi new'lenmesini istemiyorum
     {
+     
         public int Id { get; set; }
         public DateTime CreatedDate { get; set; }
         public DateTime UpdatedDate { get; set; }
