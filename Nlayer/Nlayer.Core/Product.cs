@@ -19,5 +19,7 @@ namespace Nlayer.Core
         public int CategoryId { get; set; }
         // Category ile product arasında bire çok ilişki olduğu için Category Navigation Property oluşturuldu
         public Category Category { get; set; }
+
+        public ProductFeature ProductFeature { get; set; }
     }
 }
