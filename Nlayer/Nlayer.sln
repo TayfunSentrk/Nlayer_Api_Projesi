@@ -5,6 +5,8 @@ VisualStudioVersion = 17.10.35013.160
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nlayer.Core", "Nlayer.Core\Nlayer.Core.csproj", "{5D818A95-FA21-4765-BA66-F3D391CAE95C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nlayer.Data", "Nlayer.Data\Nlayer.Data.csproj", "{0D3B22FB-FCEC-44C2-92CF-78DA18F4A10C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{5D818A95-FA21-4765-BA66-F3D391CAE95C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5D818A95-FA21-4765-BA66-F3D391CAE95C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5D818A95-FA21-4765-BA66-F3D391CAE95C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0D3B22FB-FCEC-44C2-92CF-78DA18F4A10C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0D3B22FB-FCEC-44C2-92CF-78DA18F4A10C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0D3B22FB-FCEC-44C2-92CF-78DA18F4A10C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0D3B22FB-FCEC-44C2-92CF-78DA18F4A10C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
