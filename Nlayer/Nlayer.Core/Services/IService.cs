@@ -36,8 +36,8 @@ namespace Nlayer.Core.Services
         /// Benzersiz kimliğiyle bir entity alır.
         /// </summary>
         /// <param name="entity">Alınmak istenen BaseEntity tipindeki entity.</param>
-        /// <returns>Asenkron işlemi temsil eden bir görev. Görev sonucunda veritabına T tipinde entity ekler.</returns>
-        Task AddAsync(T entity);
+        /// <returns>Asenkron işlemi temsil eden bir görev. Görev sonucunda veritabına T tipinde bir entity döner.</returns>
+        Task<T> AddAsync(T entity);
 
 
         /// <summary>
@@ -45,7 +45,7 @@ namespace Nlayer.Core.Services
         /// </summary>
         /// <param name="entities">Alınmak istenen BaseEntity tipindeki entity tipinde liste.</param>
         /// <returns>Asenkron işlemi temsil eden bir görev. Görev sonucunda veritabına T tipinde list  entities ekler.</returns>
-        Task AddRangeAsync(IEnumerable<T> entities);
+        Task<IEnumerable<T>> AddRangeAsync(IEnumerable<T> entities);
 
         // <summary>
         /// Belirli bir koşula göre true veya false değeri döner
@@ -59,7 +59,7 @@ namespace Nlayer.Core.Services
         /// </summary>
         /// <param name="entity">Alınmak istenen BaseEntity tipindeki entity.</param>
         /// <returns>Asenkron işlemi temsil eden bir görev. Görev sonucunda veritabına T tipinde entity update işlemi gerçekleşitir </returns>
-        Task Update(T entity);
+        Task UpdateAsync(T entity);
 
 
         /// <summary>
@@ -67,13 +67,13 @@ namespace Nlayer.Core.Services
         /// </summary>
         /// <param name="entity">Alınmak istenen BaseEntity tipindeki entity.</param>
         /// <returns>Asenkron işlemi temsil eden bir görev. Görev sonucunda veritabına T tipinde entity silme işlemi gerçekleşir </returns>
-        Task Remove(T entity);
+        Task RemoveAsync(T entity);
 
         /// <summary>
         ///  IEnumerable T Tipinde liste alır
         /// </summary>
         /// <param name="entites">Alınmak istenen BaseEntity tipindeki entity listesi.</param>
         /// <returns>Asenkron işlemi temsil eden bir görev. Görev sonucunda veritabına T tipinde list entitileri silme işlemi gerçekleşir .</returns>
-        Task RemoveRange(IEnumerable<T> entites);
+        Task RemoveRangeAsync(IEnumerable<T> entites);
     }
 }
