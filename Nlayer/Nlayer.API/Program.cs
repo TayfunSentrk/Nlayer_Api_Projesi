@@ -1,9 +1,12 @@
 using Microsoft.EntityFrameworkCore;
 using Nlayer.Core.Repositories;
+using Nlayer.Core.Services;
 using Nlayer.Core.UnitOfWorks;
 using Nlayer.Data;
 using Nlayer.Data.Repositories;
 using Nlayer.Data.UnitOfWorks;
+using Nlayer.Service.Mapping;
+using Nlayer.Service.Services;
 using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -17,6 +20,8 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>(); //IUnitwýrk gördüðü yerde unitof work kullanýcak
 builder.Services.AddScoped(typeof(IGenericRepository<>),typeof(GenericRepository<>)); //generic olduðu için type of þekinde ekledim
+builder.Services.AddScoped(typeof(IService<>), typeof(Service<>));//servislerin dependecy tarafý
+builder.Services.AddAutoMapper(typeof(MapProfile));//mapprofile'nin içinde bulunduðu assembly 
 
 builder.Services.AddDbContext<AppDbContext>(options => //sql yolu appsetting json'dan verildi
 {
