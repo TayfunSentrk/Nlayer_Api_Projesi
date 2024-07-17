@@ -24,7 +24,7 @@ namespace Nlayer.Core.Repositories
         /// <param name="expression">Function Delegesi. T tipinde entity alır true veya false değeri alır </param>
         /// </summary>
 
-        IQueryable<T> GetAll(Expression<Func<T, bool>> expression);
+        IQueryable<T> GetAll();
         // <summary>
         ///Veritabanı gitmeden sorgular yapmamızı sağlar .Asekron değil çünkü veritabanı sorgusu değil.veritabanı yapıcak sorgu öncesi işlemler
         /// <param name="expression">Function Delegesi. T tipinde entity alır true veya false değeri alır </param>
