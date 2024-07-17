@@ -5,12 +5,10 @@ using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Nlayer.Core.Repositories
+namespace Nlayer.Core.Services
 {
-    // bu interface t tipinde fakat baseentity tipinde olmalıdır ama new lenmeli yani abstract olmamalıdır
-    public interface IGenericRepository<T> where T : BaseEntity, new()
+    public interface IService<T> where T : BaseEntity, new()
     {
-
         /// <summary>
         /// Benzersiz kimliğiyle bir Id alır.
         /// </summary>
@@ -24,13 +22,13 @@ namespace Nlayer.Core.Repositories
         /// <param name="expression">Function Delegesi. T tipinde entity alır true veya false değeri alır </param>
         /// </summary>
 
-        IQueryable<T> GetAll(Expression<Func<T, bool>> expression);
+        Task<IEnumerable<T>> GetAll();
         // <summary>
-        ///Veritabanı gitmeden sorgular yapmamızı sağlar .Asekron değil çünkü veritabanı sorgusu değil.veritabanı yapıcak sorgu öncesi işlemler
-        /// <param name="expression">Function Delegesi. T tipinde entity alır true veya false değeri alır </param>
+        ///Tüm datayı almamızı sağlar
+        /// 
         /// </summary>
 
-        /// <returns>Veritabanına gitmeden bir değer dönmemizi sağlar.Böylece order by gibi linq sorgulara yapabiliriz.</returns>
+        /// <returns>Asenkron işlemi temsil eden bir görev. Görev sonucunda IEnumerable tipinde T entites döner,</returns>
         IQueryable<T> Where(Expression<Func<T, bool>> expression);
 
 
@@ -60,22 +58,22 @@ namespace Nlayer.Core.Repositories
         ///  T Tipinde entity alır
         /// </summary>
         /// <param name="entity">Alınmak istenen BaseEntity tipindeki entity.</param>
-        /// <returns> Görev sonucunda veritabına T tipinde entity update işlemi gerçekleşitir Asekron değil çünkü sadece state yapısı değişir.</returns>
-        void Update(T entity);
+        /// <returns>Asenkron işlemi temsil eden bir görev. Görev sonucunda veritabına T tipinde entity update işlemi gerçekleşitir </returns>
+        Task Update(T entity);
 
 
         /// <summary>
         ///  T Tipinde entity alır
         /// </summary>
         /// <param name="entity">Alınmak istenen BaseEntity tipindeki entity.</param>
-        /// <returns> Görev sonucunda veritabına T tipinde entity silme işlemi gerçekleşir Asekron değil çünkü sadece state yapısı değişir.</returns>
-        void Remove(T entity);
+        /// <returns>Asenkron işlemi temsil eden bir görev. Görev sonucunda veritabına T tipinde entity silme işlemi gerçekleşir </returns>
+        Task Remove(T entity);
 
         /// <summary>
         ///  IEnumerable T Tipinde liste alır
         /// </summary>
         /// <param name="entites">Alınmak istenen BaseEntity tipindeki entity listesi.</param>
-        /// <returns> Görev sonucunda veritabına T tipinde list entitileri silme işlemi gerçekleşir Asekron değil çünkü sadece state yapısı değişir.</returns>
-        void RemoveRange(IEnumerable<T> entites);
+        /// <returns>Asenkron işlemi temsil eden bir görev. Görev sonucunda veritabına T tipinde list entitileri silme işlemi gerçekleşir .</returns>
+        Task RemoveRange(IEnumerable<T> entites);
     }
 }
