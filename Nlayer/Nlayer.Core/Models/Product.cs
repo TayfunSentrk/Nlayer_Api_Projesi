@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Nlayer.Core
+namespace Nlayer.Core.Models
 {
-    public class Product:BaseEntity
+    public class Product : BaseEntity
     {
 
         // name property oluşturuldu

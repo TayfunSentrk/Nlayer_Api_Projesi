@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Nlayer.Core;
+using Nlayer.Core.Models;
 using Nlayer.Core.Repositories;
 using System;
 using System.Collections.Generic;

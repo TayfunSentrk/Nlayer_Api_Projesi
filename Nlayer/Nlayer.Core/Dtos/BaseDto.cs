@@ -4,13 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Nlayer.Core
+namespace Nlayer.Core.Dtos
 {
-    public abstract  class BaseEntity // abstract kullanmamın sebebi new'lenmesini istemiyorum
+    public abstract class BaseDto
     {
-     
         public int Id { get; set; }
         public DateTime CreatedDate { get; set; }
-        public DateTime? UpdatedDate { get; set; }
     }
 }
