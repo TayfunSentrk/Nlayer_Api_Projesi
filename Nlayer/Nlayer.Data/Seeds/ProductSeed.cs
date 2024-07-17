@@ -26,7 +26,7 @@ namespace Nlayer.Data.Seeds
 
             }, new Product()
             {
-                Id = 1,
+                Id = 2,
                 Name = "Kalem2",
                 CategoryId = 1,
                 Price = 200,
@@ -35,7 +35,7 @@ namespace Nlayer.Data.Seeds
             },
             new Product()
             {
-                Id = 1,
+                Id = 3,
                 Name = "Kalem3",
                 CategoryId = 1,
                 Price = 5000,
@@ -53,7 +53,7 @@ namespace Nlayer.Data.Seeds
          },
                new Product()
                {
-                   Id = 4,
+                   Id = 5,
                    Name = "kitap2",
                    CategoryId = 2,
                    Price = 5000,
