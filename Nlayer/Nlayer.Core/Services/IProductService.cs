@@ -17,6 +17,6 @@ namespace Nlayer.Core.Services
         /// Kategorileriyle birlikte ürünleri asenkron olarak getiren metot
         /// </summary>
         /// <returns>Kategorileriyle birlikte ürünlerin listesini döner</returns>
-        Task<List<ProductWithCategoryDto>> GetProductsWithCategoryAsync();
+        Task<CustomResponseDto<List<ProductWithCategoryDto>>> GetProductsWithCategoryAsync();
     }
 }
