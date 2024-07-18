@@ -41,13 +41,12 @@ namespace Nlayer.Data.Repositories
             ///     - ProductA
             ///     - ProductB
             /// </returns>
-            public async Task<List<Category>> GetSingleCategoryByIdWithProduct(int categoryId)
+            public async Task<Category> GetSingleCategoryByIdWithProduct(int categoryId)
             {
                 // Veritabanından belirtilen kategori ID'sine sahip kategoriyi ve bu kategoriye ait ürünleri getirir.
-                return await _dbContext.Categories
-                    .Where(c => c.Id == categoryId)
-                    .Include(c => c.Products)
-                    .ToListAsync();
+                return await _dbContext.Categories.Include(c => c.Products).Where(c => c.Id == categoryId).SingleOrDefaultAsync();
+                  
+                  
             }
         }
     }

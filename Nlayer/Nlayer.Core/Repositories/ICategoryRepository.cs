@@ -25,7 +25,7 @@ namespace Nlayer.Core.Repositories
         ///     - ProductA
         ///     - ProductB
         /// </returns>
-        public Task<List<Category>> GetSingleCategoryByIdWithProduct(int categoryId);
+        public Task<Category> GetSingleCategoryByIdWithProduct(int categoryId);
     }
 
 }
