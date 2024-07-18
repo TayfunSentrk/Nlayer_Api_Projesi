@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Nlayer.API.Filters;
 using Nlayer.Core.Services;
 
 namespace Nlayer.API.Controllers
@@ -9,6 +10,7 @@ namespace Nlayer.API.Controllers
     /// CategoriesController sınıfı, kategori verilerini yönetmek için gerekli API endpoint'lerini tanımlar.
     /// CustomBaseController sınıfından türetilmiştir.
     /// </summary>
+
     [Route("api/[controller]")]
     [ApiController]
     public class CategoriesController : CustomBaseController

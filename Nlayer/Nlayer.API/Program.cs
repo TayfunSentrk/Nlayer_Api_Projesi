@@ -1,5 +1,6 @@
 using FluentValidation.AspNetCore;
 using Microsoft.EntityFrameworkCore;
+using Nlayer.API.Filters;
 using Nlayer.Core.Repositories;
 using Nlayer.Core.Services;
 using Nlayer.Core.UnitOfWorks;
@@ -16,7 +17,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
-builder.Services.AddControllers().AddFluentValidation(opt=>
+builder.Services.AddControllers(options=> { options.Filters.Add(new ValidateFilterAttribute()); }).AddFluentValidation(opt=>
 {
     opt.RegisterValidatorsFromAssemblyContaining<ProductDtoValidator>();
 });//burda productdtovalidotor assembly aldýk

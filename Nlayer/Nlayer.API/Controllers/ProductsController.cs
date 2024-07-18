@@ -1,16 +1,19 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Nlayer.API.Filters;
 using Nlayer.Core.Dtos;
 using Nlayer.Core.Models;
 using Nlayer.Core.Services;
 
 namespace Nlayer.API.Controllers
 {
-   
+
     /// <summary>
     /// Ürünlerle ilgili işlemleri gerçekleştiren kontrolcü sınıfı
     /// </summary>
+    /// 
+   
     public class ProductsController : CustomBaseController
     {
         private readonly IMapper mapper;
