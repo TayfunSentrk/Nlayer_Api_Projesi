@@ -1,8 +1,11 @@
+using Autofac;
+using Autofac.Extensions.DependencyInjection;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Nlayer.API.Filters;
 using Nlayer.API.MiddleWares;
+using Nlayer.API.Modules;
 using Nlayer.Core.Repositories;
 using Nlayer.Core.Services;
 using Nlayer.Core.UnitOfWorks;
@@ -32,13 +35,13 @@ builder.Services.Configure<ApiBehaviorOptions>(options =>
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddScoped(typeof(NotFoundFilter<>));//bunu IService dll olarak kullandýðý için dependecy injection yaptým
-builder.Services.AddScoped<IUnitOfWork, UnitOfWork>(); //IUnitwýrk gördüðü yerde unitof work kullanýcak
-builder.Services.AddScoped(typeof(IGenericRepository<>),typeof(GenericRepository<>)); //generic olduðu için type of þekinde ekledim
-builder.Services.AddScoped(typeof(IService<>), typeof(Service<>));//servislerin dependecy tarafý
-builder.Services.AddScoped<IProductRepository, ProductRepository>();//Iproductrepository gördüðü yerde product repository kullanýcak
-builder.Services.AddScoped<IProductService,ProductService>();//IProductService gördüðü yerde ProductService kullanýcak
-builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
-builder.Services.AddScoped<ICategoryService, CategoryService>();    
+//builder.Services.AddScoped<IUnitOfWork, UnitOfWork>(); //IUnitwýrk gördüðü yerde unitof work kullanýcak
+//builder.Services.AddScoped(typeof(IGenericRepository<>),typeof(GenericRepository<>)); //generic olduðu için type of þekinde ekledim
+////builder.Services.AddScoped(typeof(IService<>), typeof(Service<>));//servislerin dependecy tarafý
+//builder.Services.AddScoped<IProductRepository, ProductRepository>();//Iproductrepository gördüðü yerde product repository kullanýcak
+//builder.Services.AddScoped<IProductService,ProductService>();//IProductService gördüðü yerde ProductService kullanýcak
+//builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
+//builder.Services.AddScoped<ICategoryService, CategoryService>();    
 builder.Services.AddAutoMapper(typeof(MapProfile));//mapprofile'nin içinde bulunduðu assembly 
 
 builder.Services.AddDbContext<AppDbContext>(options => //sql yolu appsetting json'dan verildi
@@ -47,6 +50,12 @@ builder.Services.AddDbContext<AppDbContext>(options => //sql yolu appsetting jso
     {
         option.MigrationsAssembly(Assembly.GetAssembly(typeof(AppDbContext))!.GetName().Name); //burda migration oluþcaðý yer yani appdbcontext assembly ! bunu null olmacaðýný belirrttim
     });
+});
+
+builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory()); //kütüphanden gelen servis eklendi
+builder.Host.ConfigureContainer<ContainerBuilder>(containerBuilder => //containerbuilder autofacten geliyor burda autofac'ta yaptýðýmýz uygulamalarý buraya dahil ettik
+{
+    containerBuilder.RegisterModule(new RepoServiceModule());
 });
 var app = builder.Build();
 
