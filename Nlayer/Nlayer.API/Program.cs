@@ -4,6 +4,7 @@ using Nlayer.Core.Services;
 using Nlayer.Core.UnitOfWorks;
 using Nlayer.Data;
 using Nlayer.Data.Repositories;
+using Nlayer.Data.Repositories.Nlayer.Core.Repositories;
 using Nlayer.Data.UnitOfWorks;
 using Nlayer.Service.Mapping;
 using Nlayer.Service.Services;
@@ -23,6 +24,8 @@ builder.Services.AddScoped(typeof(IGenericRepository<>),typeof(GenericRepository
 builder.Services.AddScoped(typeof(IService<>), typeof(Service<>));//servislerin dependecy tarafý
 builder.Services.AddScoped<IProductRepository, ProductRepository>();//Iproductrepository gördüðü yerde product repository kullanýcak
 builder.Services.AddScoped<IProductService,ProductService>();//IProductService gördüðü yerde ProductService kullanýcak
+builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
+builder.Services.AddScoped<ICategoryService, CategoryService>();    
 builder.Services.AddAutoMapper(typeof(MapProfile));//mapprofile'nin içinde bulunduðu assembly 
 
 builder.Services.AddDbContext<AppDbContext>(options => //sql yolu appsetting json'dan verildi
