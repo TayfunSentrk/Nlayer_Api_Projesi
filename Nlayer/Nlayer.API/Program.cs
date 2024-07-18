@@ -34,6 +34,8 @@ builder.Services.Configure<ApiBehaviorOptions>(options =>
 });
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+builder.Services.AddMemoryCache();//cache yapýsýný dahil etmek için ekledim
 builder.Services.AddScoped(typeof(NotFoundFilter<>));//bunu IService dll olarak kullandýðý için dependecy injection yaptým
 //builder.Services.AddScoped<IUnitOfWork, UnitOfWork>(); //IUnitwýrk gördüðü yerde unitof work kullanýcak
 //builder.Services.AddScoped(typeof(IGenericRepository<>),typeof(GenericRepository<>)); //generic olduðu için type of þekinde ekledim
@@ -57,6 +59,7 @@ builder.Host.ConfigureContainer<ContainerBuilder>(containerBuilder => //containe
 {
     containerBuilder.RegisterModule(new RepoServiceModule());
 });
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
