@@ -15,17 +15,20 @@ namespace Nlayer.API.Controllers
     public class ProductsController : CustomBaseController
     {
         private readonly IMapper mapper;
-        private readonly IService<Product> service;
+        
+
+        private readonly IProductService productService;
 
         /// <summary>
         /// IMapper ve IService<Product> bağımlılıklarını enjekte eden kurucu metot
         /// </summary>
         /// <param name="mapper">IMapper nesnesi</param>
         /// <param name="service">IService<Product> nesnesi</param>
-        public ProductsController(IMapper mapper, IService<Product> service)
+        public ProductsController(IMapper mapper, IProductService productService)
         {
             this.mapper = mapper;
-            this.service = service;
+           
+            this.productService = productService;
         }
 
         /// <summary>
@@ -36,7 +39,7 @@ namespace Nlayer.API.Controllers
         public async Task<IActionResult> All()
         {
             // Tüm ürünleri al
-            var products = await service.GetAll();
+            var products = await productService.GetAll();
             // Ürünleri DTO'ya dönüştür
             var productsDto = mapper.Map<List<ProductDto>>(products.ToList());
 
@@ -53,7 +56,7 @@ namespace Nlayer.API.Controllers
         public async Task<IActionResult> GetById(int id)
         {
             // ID'ye göre ürünü al
-            var product = await service.GetByIdAsync(id);
+            var product = await productService.GetByIdAsync(id);
             // Ürünü DTO'ya dönüştür
             var productDto = mapper.Map<ProductDto>(product);
 
@@ -70,7 +73,7 @@ namespace Nlayer.API.Controllers
         public async Task<IActionResult> Save(ProductDto product)
         {
             // Yeni ürünü ekle
-            var createdProduct = await service.AddAsync(mapper.Map<Product>(product));
+            var createdProduct = await productService.AddAsync(mapper.Map<Product>(product));
             // Eklenen ürünü DTO'ya dönüştür
             var productDto = mapper.Map<ProductDto>(createdProduct);
 
@@ -87,7 +90,7 @@ namespace Nlayer.API.Controllers
         public async Task<IActionResult> Update(ProductUpdateDto product)
         {
             // Ürünü güncelle
-            await service.UpdateAsync(mapper.Map<Product>(product));
+            await productService.UpdateAsync(mapper.Map<Product>(product));
 
             // Başarılı sonuç döner (içerik yok)
             return CreateActionResult(CustomResponseDto<NoContentDto>.Success(204));
@@ -102,12 +105,20 @@ namespace Nlayer.API.Controllers
         public async Task<IActionResult> Delete(int id)
         {
             // ID'ye göre ürünü al
-            var product = await service.GetByIdAsync(id);
+            var product = await productService.GetByIdAsync(id);
             // Ürünü sil
-            await service.RemoveAsync(product);
+            await productService.RemoveAsync(product);
 
             // Başarılı sonuç döner (içerik yok)
             return CreateActionResult(CustomResponseDto<NoContentDto>.Success(204));
+        }
+
+
+        [HttpGet("{GetProductWithCategory}")]
+
+        public async Task<IActionResult> GetProductWithCategory()
+        {
+            return CreateActionResult(await productService.GetProductsWithCategoryAsync());
         }
     }
 
