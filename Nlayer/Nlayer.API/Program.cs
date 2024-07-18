@@ -2,6 +2,7 @@ using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Nlayer.API.Filters;
+using Nlayer.API.MiddleWares;
 using Nlayer.Core.Repositories;
 using Nlayer.Core.Services;
 using Nlayer.Core.UnitOfWorks;
@@ -57,7 +58,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
+app.UseCustomException();//hata middleware ekledik
 app.UseAuthorization();
 
 app.MapControllers();
