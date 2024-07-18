@@ -21,6 +21,8 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>(); //IUnitwýrk gördüðü yerde unitof work kullanýcak
 builder.Services.AddScoped(typeof(IGenericRepository<>),typeof(GenericRepository<>)); //generic olduðu için type of þekinde ekledim
 builder.Services.AddScoped(typeof(IService<>), typeof(Service<>));//servislerin dependecy tarafý
+builder.Services.AddScoped<IProductRepository, ProductRepository>();//Iproductrepository gördüðü yerde product repository kullanýcak
+builder.Services.AddScoped<IProductService,ProductService>();//IProductService gördüðü yerde ProductService kullanýcak
 builder.Services.AddAutoMapper(typeof(MapProfile));//mapprofile'nin içinde bulunduðu assembly 
 
 builder.Services.AddDbContext<AppDbContext>(options => //sql yolu appsetting json'dan verildi
