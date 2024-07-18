@@ -4,7 +4,8 @@ using Nlayer.Core.Dtos;
 
 namespace Nlayer.API.Controllers
 {
-
+    [Route("api/[controller]")]
+    [ApiController]
     /// <summary>
     /// Özel taban kontrolcü sınıfı
     /// </summary>

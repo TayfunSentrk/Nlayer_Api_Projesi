@@ -7,8 +7,7 @@ using Nlayer.Core.Services;
 
 namespace Nlayer.API.Controllers
 {
-    [Route("api/[controller]")]
-    [ApiController]
+   
     /// <summary>
     /// Ürünlerle ilgili işlemleri gerçekleştiren kontrolcü sınıfı
     /// </summary>
