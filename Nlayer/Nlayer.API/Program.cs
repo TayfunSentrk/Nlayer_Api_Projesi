@@ -1,4 +1,5 @@
 using FluentValidation.AspNetCore;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Nlayer.API.Filters;
 using Nlayer.Core.Repositories;
@@ -22,6 +23,11 @@ builder.Services.AddControllers(options=> { options.Filters.Add(new ValidateFilt
     opt.RegisterValidatorsFromAssemblyContaining<ProductDtoValidator>();
 });//burda productdtovalidotor assembly aldýk
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+
+builder.Services.Configure<ApiBehaviorOptions>(options =>
+{
+    options.SuppressModelStateInvalidFilter = true;// framework belirlemiþ olduðu response baskýladýk
+});
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
