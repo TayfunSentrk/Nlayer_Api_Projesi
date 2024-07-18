@@ -3,6 +3,7 @@ using Nlayer.Core.Models;
 using Nlayer.Core.Repositories;
 using Nlayer.Core.Services;
 using Nlayer.Core.UnitOfWorks;
+using Nlayer.Service.Exceptions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -75,7 +76,14 @@ namespace Nlayer.Service.Services
         /// <returns>Asenkron işlemi temsil eden bir görev. Görev sonucunda T tipinde entity döner,.</returns>
         public async Task<T> GetByIdAsync(int id)
         {
-            return await genericRepository.GetByIdAsync(id);
+           var hasData= await genericRepository.GetByIdAsync(id);
+
+            if (hasData == null)
+            {
+                throw new ClientSideException($"{typeof(T).Name} does not exist");  //burda client kaynaklı olduğu  için client tarafa için oluşturduğumuz hata sınıfını fırlattık
+            }
+
+            return hasData;
         }
 
         /// <summary>
