@@ -80,7 +80,7 @@ namespace Nlayer.Service.Services
 
             if (hasData == null)
             {
-                throw new ClientSideException($"{typeof(T).Name} does not exist");  //burda client kaynaklı olduğu  için client tarafa için oluşturduğumuz hata sınıfını fırlattık
+                throw new NotFoundException($"{typeof(T).Name} does not exist");  //burda client kaynaklı olduğu  için client tarafa için oluşturduğumuz hata sınıfını fırlattık
             }
 
             return hasData;

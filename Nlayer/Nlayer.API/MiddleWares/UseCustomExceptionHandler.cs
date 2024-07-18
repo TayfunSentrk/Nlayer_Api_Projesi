@@ -19,6 +19,7 @@ namespace Nlayer.API.MiddleWares
                     var statusCode = exceptionFeature.Error switch
                     {
                         ClientSideException => 400, //client taraflıysa 400 olucak
+                        NotFoundException=>404,//eğer data veritabanında yoksa
                         _ => 500 //default olarak 500 
                     };
 
