@@ -114,7 +114,7 @@ namespace Nlayer.API.Controllers
         }
 
 
-        [HttpGet("{GetProductWithCategory}")]
+        [HttpGet("[action]")]
 
         public async Task<IActionResult> GetProductWithCategory()
         {

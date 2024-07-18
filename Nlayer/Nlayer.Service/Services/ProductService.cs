@@ -33,10 +33,14 @@ namespace Nlayer.Service.Services
             // _repository.GetProductWithCategory() metodunu çağırır ve sonucu bekler.
             // Sonucu, List<ProductWithCategoryDto> türüne dönüştürmek için mapper kullanır ve döner.
             // Dönüş değerini CustomResponseDto ile sararak, başarı durumu ve HTTP 200 durum kodu ile birlikte döner.
+
+            var a= await _repository.GetProductWithCategory();
+            var b = mapper.Map<List<ProductWithCategoryDto>>(await _repository.GetProductWithCategory());
             return CustomResponseDto<List<ProductWithCategoryDto>>.Success(
                 200,
                 mapper.Map<List<ProductWithCategoryDto>>(await _repository.GetProductWithCategory())
             );
+
         }
     }
 }
