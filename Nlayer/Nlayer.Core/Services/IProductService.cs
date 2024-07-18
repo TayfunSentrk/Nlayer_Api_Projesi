@@ -1,4 +1,5 @@
-﻿using Nlayer.Core.Models;
+﻿using Nlayer.Core.Dtos;
+using Nlayer.Core.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,6 +17,6 @@ namespace Nlayer.Core.Services
         /// Kategorileriyle birlikte ürünleri asenkron olarak getiren metot
         /// </summary>
         /// <returns>Kategorileriyle birlikte ürünlerin listesini döner</returns>
-        Task<List<Product>> GetProductsWithCategoryAsync();
+        Task<List<ProductWithCategoryDto>> GetProductsWithCategoryAsync();
     }
 }
