@@ -31,7 +31,7 @@ builder.Services.Configure<ApiBehaviorOptions>(options =>
 });
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-
+builder.Services.AddScoped(typeof(NotFoundFilter<>));//bunu IService dll olarak kullandýðý için dependecy injection yaptým
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>(); //IUnitwýrk gördüðü yerde unitof work kullanýcak
 builder.Services.AddScoped(typeof(IGenericRepository<>),typeof(GenericRepository<>)); //generic olduðu için type of þekinde ekledim
 builder.Services.AddScoped(typeof(IService<>), typeof(Service<>));//servislerin dependecy tarafý

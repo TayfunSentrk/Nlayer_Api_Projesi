@@ -54,6 +54,8 @@ namespace Nlayer.API.Controllers
         /// </summary>
         /// <param name="id">Ürünün ID'si</param>
         /// <returns>Ürün bilgilerini döner</returns>
+        ///
+        [ServiceFilter(typeof(NotFoundFilter<Product>))] //burda attribute olarak kullanamayız çünkü generic bir yapı alıyor servisi constructorda geçiyor ondan servicefilter kullandım
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(int id)
         {
