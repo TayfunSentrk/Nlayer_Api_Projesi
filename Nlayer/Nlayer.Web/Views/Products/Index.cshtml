@@ -27,7 +27,10 @@
                 <td>@product.Stock</td> @* // Ürün stok durumu *@
                 <td>@product.CategoryDto.Name</td>@*  // Ürün kategorisi adı *@
                 <td>@product.CreatedDate</td> @* // Ürün oluşturulma tarihi *@
-                <td><a asp-action="Update" asp-route-id="@product.Id" class="btn btn-primary">Güncelle</a></td>
+                <td>
+                    <a asp-action="Update" asp-route-id="@product.Id" class="btn btn-primary">Güncelle</a>
+                    <a asp-action="Delete" asp-route-id="@product.Id" class="btn btn-danger">Silme</a>
+                    </td>
             </tr>
         }
     </tbody>

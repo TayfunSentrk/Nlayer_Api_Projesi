@@ -78,32 +78,55 @@ namespace Nlayer.Web.Controllers
         }
 
 
-        [HttpGet]
+       /// <summary>
+    /// Ürün güncelleme sayfasını görüntüler.
+    /// </summary>
+    /// <param name="id">Güncellenecek ürünün kimliği.</param>
+    /// <returns>Ürün güncelleme sayfasını döner.</returns>
+    [HttpGet]
+    public async Task<IActionResult> Update(int id)
+    {
+        var categories = await categoryService.GetAll();
+        var categoriesDto = mapper.Map<List<CategoryDto>>(categories.ToList());
 
-        public async Task<IActionResult> Update(int id)
+        ViewBag.categories = new SelectList(categoriesDto, "Id", "Name");
+        return View(mapper.Map<ProductUpdateDto>(await productService.GetByIdAsync(id)));
+    }
+
+    /// <summary>
+    /// Ürünü günceller.
+    /// </summary>
+    /// <param name="productUpdateDto">Güncellenecek ürün bilgileri.</param>
+    /// <returns>İşlem başarılıysa ürün listesini döner, değilse ürün güncelleme sayfasını döner.</returns>
+    [HttpPost]
+    public async Task<IActionResult> Update(ProductUpdateDto productUpdateDto)
+    {
+        if (ModelState.IsValid)
         {
-            var categories = await categoryService.GetAll();
-            var categoriesDto = mapper.Map<List<CategoryDto>>(categories.ToList());
-
-            ViewBag.categories = new SelectList(categoriesDto, "Id", "Name");
-            return View(mapper.Map<ProductUpdateDto>(await productService.GetByIdAsync(id)));   
-           
+            await productService.UpdateAsync(mapper.Map<Product>(productUpdateDto));
+            return RedirectToAction(nameof(Index));
         }
 
-        [HttpPost]
-        public async Task<IActionResult> Update(ProductUpdateDto productUpdateDto)
-        {
-            if (ModelState.IsValid)
-            {
-               await productService.UpdateAsync(mapper.Map<Product>(productUpdateDto));
-                return RedirectToAction(nameof(Index));
-            }
-            var categories = await categoryService.GetAll();
-            var categoriesDto = mapper.Map<List<CategoryDto>>(categories.ToList());
+        var categories = await categoryService.GetAll();
+        var categoriesDto = mapper.Map<List<CategoryDto>>(categories.ToList());
 
-            ViewBag.categories = new SelectList(categoriesDto, "Id", "Name");
-            return View();
-        }
+        ViewBag.categories = new SelectList(categoriesDto, "Id", "Name");
+        return View();
+    }
+
+    /// <summary>
+    /// Ürünü siler.
+    /// </summary>
+    /// <param name="id">Silinecek ürünün kimliği.</param>
+  
+    [HttpGet]
+    public async Task<IActionResult> Delete(int id)
+    {
+        var product = await productService.GetByIdAsync(id);
+        await productService.RemoveAsync(product);
+
+        return RedirectToAction(nameof(Index));
+    }
     }
 
 }
