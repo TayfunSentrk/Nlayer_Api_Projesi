@@ -35,7 +35,9 @@
             <!-- Kategori seçimi -->
             <div class="form-group">
                 <label>Category Adı</label>
-                <select asp-for="CategoryId" asp-items="@ViewBag.categories" class="form-control"></select>
+                <select asp-for="CategoryId" asp-items="@ViewBag.categories" class="form-control">
+                    <option>Seçiniz</option>
+                </select>
                 <span asp-validation-for="CategoryId" class="text-danger"></span>
             </div>
 
