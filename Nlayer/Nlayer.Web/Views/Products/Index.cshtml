@@ -1,0 +1,32 @@
+﻿@{
+    ViewData["Title"] = "Index"; // Sayfa başlığını ayarlar
+}
+
+@model List<ProductWithCategoryDto> // Görünüm için modeli belirtir
+
+<!-- Ürünleri ve kategorilerini listeleyen tablo -->
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Price</th>
+            <th>Stock</th>
+            <th>Category</th>
+            <th>CreatedDate</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var product in Model) // Modeldeki her bir ürünü döngü ile işler
+        {
+            <tr>
+                <td>@product.Id</td> // Ürün Id'si
+                <td>@product.Name</td> // Ürün adı
+                <td>@product.Price</td> // Ürün fiyatı
+                <td>@product.Stock</td> // Ürün stok durumu
+                <td>@product.CategoryDto.Name</td> // Ürün kategorisi adı
+                <td>@product.CreatedDate</td> // Ürün oluşturulma tarihi
+            </tr>
+        }
+    </tbody>
+</table>
