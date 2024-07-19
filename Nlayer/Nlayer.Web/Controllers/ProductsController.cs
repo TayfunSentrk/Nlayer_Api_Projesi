@@ -78,11 +78,13 @@ namespace Nlayer.Web.Controllers
         }
 
 
-       /// <summary>
-    /// Ürün güncelleme sayfasını görüntüler.
-    /// </summary>
-    /// <param name="id">Güncellenecek ürünün kimliği.</param>
-    /// <returns>Ürün güncelleme sayfasını döner.</returns>
+        /// <summary>
+        /// Ürün güncelleme sayfasını görüntüler.
+        /// </summary>
+        /// <param name="id">Güncellenecek ürünün kimliği.</param>
+        /// <returns>Ürün güncelleme sayfasını döner.</returns>
+        /// 
+        [ServiceFilter(typeof(NotFoundFilter<Product>))] //id bulunmadığında error page yönlenecek
     [HttpGet]
     public async Task<IActionResult> Update(int id)
     {

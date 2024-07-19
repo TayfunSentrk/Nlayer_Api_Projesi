@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Nlayer.Core.Dtos;
 
 namespace Nlayer.Web.Controllers
 {
@@ -12,6 +13,11 @@ namespace Nlayer.Web.Controllers
         public IActionResult Privacy()
         {
             return View();
+        }
+        //Error Page 'e yönlenmek için
+        public IActionResult Error(ErrorViewModel errorViewModel)
+        {
+            return View(errorViewModel);
         }
     }
 }

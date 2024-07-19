@@ -7,6 +7,7 @@ using System.Reflection;
 using Nlayer.Service.Mapping;
 using FluentValidation.AspNetCore;
 using Nlayer.Service.Validations;
+using Nlayer.Web;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -27,7 +28,7 @@ builder.Services.AddDbContext<AppDbContext>(options => //sql yolu appsetting jso
         option.MigrationsAssembly(Assembly.GetAssembly(typeof(AppDbContext))!.GetName().Name); //burda migration oluþcaðý yer yani appdbcontext assembly ! bunu null olmacaðýný belirrttim
     });
 });
-
+builder.Services.AddScoped(typeof(NotFoundFilter<>));//filteri controllere ekledik
 builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory()); //kütüphanden gelen servis eklendi
 builder.Host.ConfigureContainer<ContainerBuilder>(containerBuilder => //containerbuilder autofacten geliyor burda autofac'ta yaptýðýmýz uygulamalarý buraya dahil ettik
 {
@@ -36,11 +37,11 @@ builder.Host.ConfigureContainer<ContainerBuilder>(containerBuilder => //containe
 
 
 var app = builder.Build();
-
+app.UseExceptionHandler("/Home/Error");//geliþtirme aþamasýna ekledim
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
-    app.UseExceptionHandler("/Home/Error");
+   
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }

@@ -9,6 +9,6 @@ namespace Nlayer.Core.Dtos
     public class ErrorViewModel
     {
         //mvc katmannı error viewmodel oluşturuldu
-        public List<string> Errors {  get; set; }   
+        public List<string> Errors { get; set; } = new List<string>(); //add işlemini gerçekleştirmek için   
     }
 }
