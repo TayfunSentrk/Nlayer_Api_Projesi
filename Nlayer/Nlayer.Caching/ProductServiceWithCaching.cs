@@ -113,6 +113,7 @@ namespace Nlayer.Caching
         /// <returns>Kategorilerle birlikte ürünlerin CustomResponseDto'su.</returns>
         public Task<CustomResponseDto<List<ProductWithCategoryDto>>> GetProductsWithCategoryAsync()
         {
+            var data = mapper.Map<List<ProductWithCategoryDto>>(memoryCache.Get<List<Product>>(CacheProductKey));
             return Task.FromResult(CustomResponseDto<List<ProductWithCategoryDto>>.Success(200, mapper.Map<List<ProductWithCategoryDto>>(memoryCache.Get<List<Product>>(CacheProductKey))));
         }
 
@@ -164,7 +165,7 @@ namespace Nlayer.Caching
         /// </summary>
         public async Task CacheAllProductsAsync()
         {
-            memoryCache.Set(CacheProductKey, await productRepository.GetAll().ToListAsync());
+            memoryCache.Set(CacheProductKey, await productRepository.GetProductWithCategory());
         }
     }
 
