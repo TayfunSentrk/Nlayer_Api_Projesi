@@ -12,14 +12,14 @@ using System.Threading.Tasks;
 
 namespace Nlayer.Service.Services
 {
-    public class ProductService : Service<Product>, IProductService
+    public class ProductServiceWithNoCaching : Service<Product>, IProductService
     {
         // Bu, ProductService sınıfında kullanılan özel alanları tanımlar.
         private readonly IProductRepository _repository;
         private readonly IMapper mapper;
 
         // ProductService sınıfının constructor'ı. Bu, sınıfın bir örneği oluşturulduğunda çağrılır.
-        public ProductService(IGenericRepository<Product> genericRepository, IUnitOfWork unitOfWork, IProductRepository repository, IMapper mapper)
+        public ProductServiceWithNoCaching(IGenericRepository<Product> genericRepository, IUnitOfWork unitOfWork, IProductRepository repository, IMapper mapper)
             : base(genericRepository, unitOfWork) // Base sınıfının constructor'ını çağırır.
         {
             // _repository alanını parametre olarak verilen repository ile başlatır.

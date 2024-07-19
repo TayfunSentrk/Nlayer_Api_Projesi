@@ -33,7 +33,7 @@ namespace Nlayer.Caching
         /// <param name="mapper">Nesne dönüşümleri için IMapper.</param>
         /// <param name="memoryCache">Cacheleme için IMemoryCache.</param>
         /// <param name="productRepository">Veritabanı işlemleri için IProductRepository.</param>
-        /// <param name="unitOfWork">Veritabanı işlemlerini commit etmek için IUnitOfWork.</param>
+        /// <param name="unitOfWork">Veritabanı işlemlerini savechangeasync için IUnitOfWork.</param>
         public ProductServiceWithCaching(IMapper mapper, IMemoryCache memoryCache, IProductRepository productRepository, IUnitOfWork unitOfWork)
         {
             this.mapper = mapper;
@@ -43,7 +43,7 @@ namespace Nlayer.Caching
 
             if (!memoryCache.TryGetValue(CacheProductKey, out _))
             {
-                memoryCache.Set(CacheProductKey, productRepository.GetProductWithCategory()); // Cache'te yoksa ürünleri cachele
+                memoryCache.Set(CacheProductKey, productRepository.GetProductWithCategory().Result); // Cache'te yoksa ürünleri cachele
             }
         }
 

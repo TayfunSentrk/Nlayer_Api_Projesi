@@ -10,6 +10,7 @@ using Nlayer.Service.Services;
 using Nlayer.Core.Services;
 using Nlayer.Data.UnitOfWorks;
 using Nlayer.Core.UnitOfWorks;
+using Nlayer.Caching;
 
 namespace Nlayer.API.Modules
 {
@@ -28,6 +29,8 @@ namespace Nlayer.API.Modules
             var serviceAssembly = Assembly.GetAssembly(typeof(MapProfile));//burda service katmanında assembly ulaşmak için bu katmanda olan herhangi bir classı verdim
             builder.RegisterAssemblyTypes(apiAssembly, dataAssembly, serviceAssembly).Where(x=>x.Name.EndsWith("Repository")).AsImplementedInterfaces().InstancePerLifetimeScope();  //b scope her istekte bir kez nesne oluşsun yani o istek tamamlanana o kadar nesne kullanıcak
             builder.RegisterAssemblyTypes(apiAssembly, dataAssembly, serviceAssembly).Where(x=>x.Name.EndsWith("Service")).AsImplementedInterfaces().InstancePerLifetimeScope();  //b scope her istekte bir kez nesne oluşsun yani o istek tamamlanana o kadar nesne kullanıcak
+
+            builder.RegisterType<ProductServiceWithCaching>().As<IProductService>().AsImplementedInterfaces().InstancePerLifetimeScope();
 
         }
     }
