@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Nlayer.Core.Models;
 using System;
 using System.Collections.Generic;
@@ -25,6 +26,78 @@ namespace Nlayer.Data
         public AppDbContext(DbContextOptions<AppDbContext> options):base(options)
         {
             
+        }
+
+
+
+
+
+        // SaveChangesAsync metodu, temel sınıfın SaveChangesAsync metodunu geçersiz kılar
+        public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
+        {
+            // İzlenen tüm varlıkları dolaşır
+            foreach (var item in ChangeTracker.Entries())
+            {
+                // Varlığın BaseEntity türünde olup olmadığını kontrol eder
+                if (item.Entity is BaseEntity entityReference)
+                {
+                    // Varlığın durumunu belirler (Added veya Modified)
+                    switch (item.State)
+                    {
+                        case EntityState.Added:
+                            {
+                                // Varlık eklenmişse, CreatedDate'i mevcut tarih ve saat olarak ayarlar
+                                entityReference.CreatedDate = DateTime.Now;
+                                break;
+                            }
+
+                        case EntityState.Modified:
+                            {
+                                // Varlık değiştirilmişse, CreatedDate'in değiştirilmesini engeller
+                                Entry(entityReference).Property(x => x.CreatedDate).IsModified = false;
+                                // UpdatedDate'i mevcut tarih ve saat olarak ayarlar
+                                entityReference.UpdatedDate = DateTime.Now;
+                                break;
+                            }
+                    }
+                }
+            }
+            // Temel sınıfın SaveChangesAsync metodunu çağırır
+            return base.SaveChangesAsync(cancellationToken);
+        }
+
+        // SaveChanges metodu, temel sınıfın SaveChanges metodunu geçersiz kılar
+        public override int SaveChanges()
+        {
+            // İzlenen tüm varlıkları dolaşır
+            foreach (var item in ChangeTracker.Entries())
+            {
+                // Varlığın BaseEntity türünde olup olmadığını kontrol eder
+                if (item.Entity is BaseEntity entityReference)
+                {
+                    // Varlığın durumunu belirler (Added veya Modified)
+                    switch (item.State)
+                    {
+                        case EntityState.Added:
+                            {
+                                // Varlık eklenmişse, CreatedDate'i mevcut tarih ve saat olarak ayarlar
+                                entityReference.CreatedDate = DateTime.Now;
+                                break;
+                            }
+
+                        case EntityState.Modified:
+                            {
+                                // Varlık değiştirilmişse, CreatedDate'in değiştirilmesini engeller
+                                Entry(entityReference).Property(x => x.CreatedDate).IsModified = false;
+                                // UpdatedDate'i mevcut tarih ve saat olarak ayarlar
+                                entityReference.UpdatedDate = DateTime.Now;
+                                break;
+                            }
+                    }
+                }
+            }
+            // Temel sınıfın SaveChanges metodunu çağırır
+            return base.SaveChanges();
         }
 
 
