@@ -35,8 +35,11 @@ namespace Nlayer.Web.Controllers
         [HttpGet]
         public async Task<IActionResult> Save()
         {
-            var categories = mapper.Map<List<CategoryDto>>(await categoryService.GetAll());
-            ViewBag.categories = new SelectList(categories, "Id", "Name");
+
+            var categories = await categoryService.GetAll();
+            var categoriesDto = mapper.Map<List<CategoryDto>>(categories.ToList());
+           
+            ViewBag.categories = new SelectList(categoriesDto, "Id", "Name");
             return View();
         }
 
@@ -54,8 +57,10 @@ namespace Nlayer.Web.Controllers
                 return RedirectToAction(nameof(Index));
             }
 
-            var categories = mapper.Map<List<CategoryDto>>(await categoryService.GetAll());
-            ViewBag.categories = new SelectList(categories, "Id", "Name");
+            var categories = await categoryService.GetAll();
+            var categoriesDto = mapper.Map<List<CategoryDto>>(categories.ToList());
+
+            ViewBag.categories = new SelectList(categoriesDto, "Id", "Name");
 
             return View();
         }
