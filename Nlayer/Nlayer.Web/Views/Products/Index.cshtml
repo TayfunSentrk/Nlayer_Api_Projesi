@@ -20,12 +20,12 @@
         @foreach (var product in Model) // Modeldeki her bir ürünü döngü ile işler
         {
             <tr>
-                <td>@product.Id</td> // Ürün Id'si
-                <td>@product.Name</td> // Ürün adı
-                <td>@product.Price</td> // Ürün fiyatı
-                <td>@product.Stock</td> // Ürün stok durumu
-                <td>@product.CategoryDto.Name</td> // Ürün kategorisi adı
-                <td>@product.CreatedDate</td> // Ürün oluşturulma tarihi
+                <td>@product.Id</td>    @*   Ürün Id'si *@
+                <td>@product.Name</td> @* // Ürün adı *@
+                <td>@product.Price</td> @* // Ürün fiyatı *@
+                <td>@product.Stock</td> @* // Ürün stok durumu *@
+                <td>@product.CategoryDto.Name</td>@*  // Ürün kategorisi adı *@
+                <td>@product.CreatedDate</td> @* // Ürün oluşturulma tarihi *@
             </tr>
         }
     </tbody>
