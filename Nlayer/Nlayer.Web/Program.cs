@@ -8,6 +8,7 @@ using Nlayer.Service.Mapping;
 using FluentValidation.AspNetCore;
 using Nlayer.Service.Validations;
 using Nlayer.Web;
+using Nlayer.Web.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -28,6 +29,16 @@ builder.Services.AddDbContext<AppDbContext>(options => //sql yolu appsetting jso
         option.MigrationsAssembly(Assembly.GetAssembly(typeof(AppDbContext))!.GetName().Name); //burda migration oluþcaðý yer yani appdbcontext assembly ! bunu null olmacaðýný belirrttim
     });
 });
+
+builder.Services.AddHttpClient<ProductApiService>(opt =>
+{
+    opt.BaseAddress = new Uri(builder.Configuration["BaseUrl"]);
+});  //httpclient product ve category'de kullandýðým için   ARTIK BU SINIFI HERHANGÝ BÝR SINIFIN CONSTRUCTORDA GEÇEBÝLÝRÝM
+
+builder.Services.AddHttpClient<CategoryApiService>(opt =>
+{
+    opt.BaseAddress = new Uri(builder.Configuration["BaseUrl"]);
+});  //httpclient product ve category'de kullandýðým için 
 builder.Services.AddScoped(typeof(NotFoundFilter<>));//filteri controllere ekledik
 builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory()); //kütüphanden gelen servis eklendi
 builder.Host.ConfigureContainer<ContainerBuilder>(containerBuilder => //containerbuilder autofacten geliyor burda autofac'ta yaptýðýmýz uygulamalarý buraya dahil ettik
