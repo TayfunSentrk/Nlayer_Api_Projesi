@@ -111,7 +111,7 @@ namespace Nlayer.Web.Controllers
         var categoriesDto = mapper.Map<List<CategoryDto>>(categories.ToList());
 
         ViewBag.categories = new SelectList(categoriesDto, "Id", "Name");
-        return View();
+        return View(productUpdateDto);
     }
 
     /// <summary>

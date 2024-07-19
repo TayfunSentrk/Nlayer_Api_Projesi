@@ -11,6 +11,10 @@
         <!-- Ürün Güncelleme formu -->
         <form asp-action="Save" method="post">
 
+           @* Ürün güncellerken ıd almak için gizli değer ve post işleminde bu değeri yitirmemesi için *@
+            <input type="hidden" asp-for="Id" />
+
+
             <!-- Ürün adı girişi -->
             <div class="form-group">
                 <label asp-for="Name"></label>
