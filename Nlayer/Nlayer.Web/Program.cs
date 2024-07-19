@@ -5,11 +5,16 @@ using Microsoft.EntityFrameworkCore;
 using Nlayer.Data;
 using System.Reflection;
 using Nlayer.Service.Mapping;
+using FluentValidation.AspNetCore;
+using Nlayer.Service.Validations;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddControllersWithViews();
+builder.Services.AddControllersWithViews().AddFluentValidation(opt =>
+{
+    opt.RegisterValidatorsFromAssemblyContaining<ProductDtoValidator>();
+});//fkuent validation program'cs eklendi
 
 builder.Services.AddMemoryCache();//cache yapýsýný dahil etmek için ekledim
  
