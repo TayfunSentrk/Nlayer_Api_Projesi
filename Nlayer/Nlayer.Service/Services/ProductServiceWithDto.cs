@@ -43,7 +43,7 @@ namespace Nlayer.Service.Services
             var entity = mapper.Map<Product>(productCreate);
             await productRepository.AddAsync(entity);
             await unitOfWork.CommitAsync();
-            var dto = mapper.Map<ProductDto>(productCreate);
+            var dto = mapper.Map<ProductDto>(entity);
             return CustomResponseDto<ProductDto>.Success(StatusCodes.Status201Created, dto);
         }
 

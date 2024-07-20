@@ -47,6 +47,7 @@ namespace Nlayer.Data
                         case EntityState.Added:
                             {
                                 // Varlık eklenmişse, CreatedDate'i mevcut tarih ve saat olarak ayarlar
+                                Entry(entityReference).Property(x => x.UpdatedDate).IsModified = false;
                                 entityReference.CreatedDate = DateTime.Now;
                                 break;
                             }
@@ -81,6 +82,7 @@ namespace Nlayer.Data
                         case EntityState.Added:
                             {
                                 // Varlık eklenmişse, CreatedDate'i mevcut tarih ve saat olarak ayarlar
+                                Entry(entityReference).Property(x => x.UpdatedDate).IsModified = false;
                                 entityReference.CreatedDate = DateTime.Now;
                                 break;
                             }
