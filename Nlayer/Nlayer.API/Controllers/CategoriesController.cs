@@ -1,6 +1,8 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Nlayer.API.Filters;
+using Nlayer.Core.Dtos;
 using Nlayer.Core.Services;
 
 namespace Nlayer.API.Controllers
@@ -16,14 +18,25 @@ namespace Nlayer.API.Controllers
     public class CategoriesController : CustomBaseController
     {
         private readonly ICategoryService _categoryService;
-
+        private readonly IMapper mapper;
         /// <summary>
         /// CategoriesController yapıcı metodu, kategori servisini alır.
         /// </summary>
         /// <param name="categoryService">Kategori servisi</param>
-        public CategoriesController(ICategoryService categoryService)
+        public CategoriesController(ICategoryService categoryService, IMapper mapper)
         {
             _categoryService = categoryService;
+            this.mapper = mapper;
+        }
+
+
+        [HttpGet]
+        public async Task<IActionResult> GetAll()
+        {
+            var categories = await _categoryService.GetAll();   
+
+            var categoriesDto=mapper.Map<List<CategoryDto>>(categories.ToList());
+            return CreateActionResult(CustomResponseDto<List<CategoryDto>>.Success(200,categoriesDto));
         }
 
         /// <summary>
@@ -40,6 +53,9 @@ namespace Nlayer.API.Controllers
         ///         - ProductA
         ///         - ProductB
         /// </returns>
+        /// 
+
+
         [HttpGet("[action]/{id}")]
         public async Task<IActionResult> GetCategoryByIdWithProducts(int id)
         {
