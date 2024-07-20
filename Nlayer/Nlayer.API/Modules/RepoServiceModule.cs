@@ -23,6 +23,7 @@ namespace Nlayer.API.Modules
             builder.RegisterGeneric(typeof(Service<>)).As(typeof(IService<>)).InstancePerLifetimeScope();//generic olan servis için dll yapısı
             builder.RegisterGeneric(typeof(ServiceWithDto<,>)).As(typeof(IServiceWithDto<,>)).InstancePerLifetimeScope();//generic olan servis için dll yapısı iki tane parametre aldığı için virgük oldu
             builder.RegisterType<UnitOfWork>().As<IUnitOfWork>().InstancePerLifetimeScope();    //unitof work tek oldığu için bu yapı kullanıldı
+            builder.RegisterType<ProductServiceWithDto>().As<IProductServiceWithDto>().InstancePerLifetimeScope(); //Iproductservicewith dto gördüğün yerde ProductServiceWithDto kullanmak için
             var apiAssembly=Assembly.GetExecutingAssembly();//üzerinde çalışılan assembly
 
             var dataAssembly = Assembly.GetAssembly(typeof(AppDbContext));//burda data katmanında assembly ulaşmak için bu katmanda olan herhangi bir classı verdim

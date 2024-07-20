@@ -22,7 +22,7 @@ namespace Nlayer.Service.Services
     /// <typeparam name="Dto">DTO (Data Transfer Object) sınıfı türü</typeparam>
     public class ServiceWithDto<TEntity, Dto> : IServiceWithDto<TEntity, Dto> where TEntity : BaseEntity, new() where Dto : class
     {
-        private readonly IGenericRepository<TEntity> genericRepository;
+        protected readonly IGenericRepository<TEntity> genericRepository;//miras alan sınıflarda kullanmak için
         protected readonly IUnitOfWork unitOfWork; //miras alan sınıflarda kullanmak için
         protected readonly IMapper mapper; //miras alan sınıflarda kullanmak için
 
