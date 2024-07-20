@@ -48,6 +48,22 @@ namespace Nlayer.Service.Services
         }
 
         /// <summary>
+        /// Yeni bir ürün listesini asenkron olarak ekler.
+        /// </summary>
+        /// <param name="dtos">Eklenecek ürün listesi oluşturma DTO'su.</param>
+        /// <returns>Eklenen  ürün  listesini DTO'sunu içeren bir <see cref="CustomResponseDto{IEnumerable<ProductDto>}"/>.</returns>
+
+        public async Task<CustomResponseDto<IEnumerable<ProductDto>>> AddRangeAsync(IEnumerable<ProductCreateDto> dtos)
+        {
+            var products = mapper.Map<IEnumerable<Product>>(dtos);
+            await productRepository.AddRangeAsync(products);
+            await unitOfWork.CommitAsync();
+            var productDtoList=mapper.Map<IEnumerable<ProductDto>>(products);
+            return CustomResponseDto<IEnumerable<ProductDto>>.Success(StatusCodes.Status201Created, productDtoList);
+
+        }
+
+        /// <summary>
         /// Kategorileri ile birlikte ürünleri asenkron olarak getirir.
         /// </summary>
         /// <returns>Kategorileri ile birlikte ürünleri içeren bir <see cref="CustomResponseDto{List{ProductWithCategoryDto}}"/>.</returns>

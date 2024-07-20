@@ -76,11 +76,46 @@ namespace Nlayer.API.Controllers
         /// <summary>
         /// Ürünleri kategorileriyle birlikte getiren metot.
         /// </summary>
+        /// 
         /// <returns>Ürün ve kategorilerinin listesini döner.</returns>
         [HttpGet("[action]")]
         public async Task<IActionResult> GetProductWithCategory()
         {
             return CreateActionResult(await productServiceWithDto.GetProductsWithCategoryAsync());
+        }
+
+        /// <summary>
+        /// Ürünleri ekleyen method.
+        /// </summary>
+        /// /// <param name="productCreateDtos">Eklenecek olan ürünlerin dtosi.</param>
+        /// <returns>Ürün ekleme işlemi yapar.Ardından eklenen ürünlerin dto 'sini döner.</returns>
+
+
+        [HttpPost("SaveRange")]
+
+        public async Task<IActionResult> SaveAll(List<ProductCreateDto> productCreateDtos)
+        {
+            return CreateActionResult(await productServiceWithDto.AddRangeAsync(productCreateDtos));
+        }
+
+        /// <summary>
+        /// Ürünleri silmeye yarayan method
+        /// </summary>
+        /// /// <param name="ids">Eklenecek olan ürünlerin id'si.</param>
+        /// <returns>Ürün silme işlemi yapar..</returns>
+
+        [HttpDelete("DeleteRange")]
+
+        public async Task<IActionResult> DeleteAll(List<int> ids)
+        {
+            return CreateActionResult(await productServiceWithDto.RemoveRangeAsync(ids));
+        }
+
+        [HttpGet("Any/{id}")]
+
+        public async Task<IActionResult> Any(int id)
+        {
+            return CreateActionResult(await productServiceWithDto.AnyAsync(x=>x.Id==id));
         }
     }
 

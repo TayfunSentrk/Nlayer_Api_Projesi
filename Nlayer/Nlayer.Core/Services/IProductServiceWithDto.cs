@@ -25,5 +25,7 @@ namespace Nlayer.Core.Services
         Task<CustomResponseDto<NoContentDto>>UpdateAsync(ProductUpdateDto productUpdateDto);//burda 
 
         Task<CustomResponseDto<ProductDto>> AddAsync(ProductCreateDto productCreate);
+
+        Task<CustomResponseDto<IEnumerable<ProductDto>>> AddRangeAsync(IEnumerable<ProductCreateDto> dtos);//Ienumerable tipinde ProductDto döner
     }
 }
