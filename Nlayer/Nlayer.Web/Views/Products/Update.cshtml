@@ -9,7 +9,7 @@
 <div class="row">
     <div class="col-md-6">
         <!-- Ürün Güncelleme formu -->
-        <form asp-action="Save" method="post">
+        <form asp-action="Update" method="post">
 
            @* Ürün güncellerken ıd almak için gizli değer ve post işleminde bu değeri yitirmemesi için *@
             <input type="hidden" asp-for="Id" />
@@ -47,7 +47,7 @@
 
             <!-- Kaydet butonu -->
             <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
+                <input type="submit" value="Update" class="btn btn-primary" />
             </div>
         </form>
     </div>

@@ -36,9 +36,9 @@ namespace Nlayer.Web.Services
         public async Task<ProductDto> GetByIdAsync(int id)
         {
             // Belirtilen id ile ürün bilgilerini alıyoruz.
-            var response = await _httpClient.GetFromJsonAsync<CustomResponseDto<ProductDto>>($"products/${id}");
+            var response = await _httpClient.GetFromJsonAsync<CustomResponseDto<ProductDto>>($"products/{id}");
 
-            return response.Data; // Gelen yanıtın Data kısmını döndürüyoruz.
+            return  response.Data; // Gelen yanıtın Data kısmını döndürüyoruz.
         }
 
         public async Task<bool> UpdateAsync(ProductUpdateDto productUpdateDto)
@@ -51,7 +51,7 @@ namespace Nlayer.Web.Services
         public async Task<bool> RemoveAsync(int id)
         {
             // Belirtilen id ile ürün bilgisini siliyoruz.
-            var response = await _httpClient.DeleteAsync($"products/${id}");
+            var response = await _httpClient.DeleteAsync($"products/{id}");
             return response.IsSuccessStatusCode; // İstek başarılıysa true döndürüyoruz.
         }
 

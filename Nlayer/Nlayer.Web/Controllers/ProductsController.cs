@@ -4,30 +4,34 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Nlayer.Core.Dtos;
 using Nlayer.Core.Models;
 using Nlayer.Core.Services;
+using Nlayer.Web.Services;
 
 namespace Nlayer.Web.Controllers
 {/// <summary>
  /// Ürün kaydetme işlemlerini yöneten kontrolcü.
  /// </summary>
+
+ /// <summary>
+ /// Ürün kaydetme işlemlerini yöneten kontrolcü.
+ /// </summary>
     public class ProductsController : Controller
     {
-        private readonly IProductService productService;
-        private readonly ICategoryService categoryService;
-        private readonly IMapper mapper;
+        private readonly ProductApiService _productApiService;
+        private readonly CategoryApiService _categoryApiService;
+        private readonly IMapper _mapper;
 
         /// <summary>
-        /// <see cref="ProductsController"/> sınıfının yeni bir örneğini başlatır.
+        /// Ürün kaydetme işlemlerini yöneten kontrolcü.
         /// </summary>
-        /// <param name="productService">Ürün servis örneği.</param>
-        /// <param name="categoryService">Kategori servis örneği.</param>
-        /// <param name="mapper">Nesne dönüştürücü örneği.</param>
-        public ProductsController(IProductService productService, ICategoryService categoryService, IMapper mapper)
+        /// <param name="productApiService">Ürün servisi.</param>
+        /// <param name="categoryApiService">Kategori servisi.</param>
+        /// <param name="mapper">Nesne eşleyici.</param>
+        public ProductsController(ProductApiService productApiService, CategoryApiService categoryApiService, IMapper mapper)
         {
-            this.productService = productService;
-            this.categoryService = categoryService;
-            this.mapper = mapper;
+            _productApiService = productApiService;
+            _categoryApiService = categoryApiService;
+            _mapper = mapper;
         }
-
 
         /// <summary>
         /// Ürünlerin ve kategorilerinin listesini görüntüler.
@@ -35,10 +39,8 @@ namespace Nlayer.Web.Controllers
         /// <returns>Ürünlerin ve kategorilerinin listesi ile görünümü döner.</returns>
         public async Task<IActionResult> Index()
         {
-            var response = await productService.GetProductsWithCategoryAsync();
-            return View(response.Data);
+            return View(await _productApiService.GetProductWithCategoryDtosAsync());
         }
-
 
         /// <summary>
         /// Ürün ekleme sayfasını görüntüler.
@@ -47,10 +49,7 @@ namespace Nlayer.Web.Controllers
         [HttpGet]
         public async Task<IActionResult> Save()
         {
-
-            var categories = await categoryService.GetAll();
-            var categoriesDto = mapper.Map<List<CategoryDto>>(categories.ToList());
-           
+            var categoriesDto = await _categoryApiService.GetAllAsync();
             ViewBag.categories = new SelectList(categoriesDto, "Id", "Name");
             return View();
         }
@@ -65,70 +64,61 @@ namespace Nlayer.Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                await productService.AddAsync(mapper.Map<Product>(productDto));
+                await _productApiService.SaveAsync(productDto);
                 return RedirectToAction(nameof(Index));
             }
 
-            var categories = await categoryService.GetAll();
-            var categoriesDto = mapper.Map<List<CategoryDto>>(categories.ToList());
-
+            var categoriesDto = await _categoryApiService.GetAllAsync();
             ViewBag.categories = new SelectList(categoriesDto, "Id", "Name");
-
             return View();
         }
-
 
         /// <summary>
         /// Ürün güncelleme sayfasını görüntüler.
         /// </summary>
         /// <param name="id">Güncellenecek ürünün kimliği.</param>
         /// <returns>Ürün güncelleme sayfasını döner.</returns>
-        /// 
-        [ServiceFilter(typeof(NotFoundFilter<Product>))] //id bulunmadığında error page yönlenecek
-    [HttpGet]
-    public async Task<IActionResult> Update(int id)
-    {
-        var categories = await categoryService.GetAll();
-        var categoriesDto = mapper.Map<List<CategoryDto>>(categories.ToList());
-
-        ViewBag.categories = new SelectList(categoriesDto, "Id", "Name");
-        return View(mapper.Map<ProductUpdateDto>(await productService.GetByIdAsync(id)));
-    }
-
-    /// <summary>
-    /// Ürünü günceller.
-    /// </summary>
-    /// <param name="productUpdateDto">Güncellenecek ürün bilgileri.</param>
-    /// <returns>İşlem başarılıysa ürün listesini döner, değilse ürün güncelleme sayfasını döner.</returns>
-    [HttpPost]
-    public async Task<IActionResult> Update(ProductUpdateDto productUpdateDto)
-    {
-        if (ModelState.IsValid)
+        [ServiceFilter(typeof(NotFoundFilter<Product>))]
+        [HttpGet]
+        public async Task<IActionResult> Update(int id)
         {
-            await productService.UpdateAsync(mapper.Map<Product>(productUpdateDto));
-            return RedirectToAction(nameof(Index));
+            var categoriesDto = await _categoryApiService.GetAllAsync();
+            ViewBag.categories = new SelectList(categoriesDto, "Id", "Name");
+
+            var productUpdatedDto = _mapper.Map<ProductUpdateDto>(await _productApiService.GetByIdAsync(id));
+            return View(productUpdatedDto);
         }
 
-        var categories = await categoryService.GetAll();
-        var categoriesDto = mapper.Map<List<CategoryDto>>(categories.ToList());
+        /// <summary>
+        /// Ürünü günceller.
+        /// </summary>
+        /// <param name="productUpdateDto">Güncellenecek ürün bilgileri.</param>
+        /// <returns>İşlem başarılıysa ürün listesini döner, değilse ürün güncelleme sayfasını döner.</returns>
+        [HttpPost]
+        public async Task<IActionResult> Update(ProductUpdateDto productUpdateDto)
+        {
+            if (ModelState.IsValid)
+            {
+                await _productApiService.UpdateAsync(productUpdateDto);
+                return RedirectToAction(nameof(Index));
+            }
 
-        ViewBag.categories = new SelectList(categoriesDto, "Id", "Name");
-        return View(productUpdateDto);
+            var categoriesDto = await _categoryApiService.GetAllAsync();
+            ViewBag.categories = new SelectList(categoriesDto, "Id", "Name");
+            return View(productUpdateDto);
+        }
+
+        /// <summary>
+        /// Ürünü siler.
+        /// </summary>
+        /// <param name="id">Silinecek ürünün kimliği.</param>
+        [HttpGet]
+        public async Task<IActionResult> Delete(int id)
+        {
+            await _productApiService.RemoveAsync(id);
+            return RedirectToAction(nameof(Index));
+        }
     }
 
-    /// <summary>
-    /// Ürünü siler.
-    /// </summary>
-    /// <param name="id">Silinecek ürünün kimliği.</param>
-  
-    [HttpGet]
-    public async Task<IActionResult> Delete(int id)
-    {
-        var product = await productService.GetByIdAsync(id);
-        await productService.RemoveAsync(product);
-
-        return RedirectToAction(nameof(Index));
-    }
-    }
 
 }
