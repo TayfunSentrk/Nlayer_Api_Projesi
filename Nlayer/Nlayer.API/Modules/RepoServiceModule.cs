@@ -21,6 +21,7 @@ namespace Nlayer.API.Modules
 
             builder.RegisterGeneric(typeof(GenericRepository<>)).As(typeof(IGenericRepository<>)).InstancePerLifetimeScope();//generic olan repository için dll yapısı
             builder.RegisterGeneric(typeof(Service<>)).As(typeof(IService<>)).InstancePerLifetimeScope();//generic olan servis için dll yapısı
+            builder.RegisterGeneric(typeof(ServiceWithDto<,>)).As(typeof(IServiceWithDto<,>)).InstancePerLifetimeScope();//generic olan servis için dll yapısı iki tane parametre aldığı için virgük oldu
             builder.RegisterType<UnitOfWork>().As<IUnitOfWork>().InstancePerLifetimeScope();    //unitof work tek oldığu için bu yapı kullanıldı
             var apiAssembly=Assembly.GetExecutingAssembly();//üzerinde çalışılan assembly
 
